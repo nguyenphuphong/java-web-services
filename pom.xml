@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>vn.kase.jee</groupId>
+    <artifactId>java-enterprise-edition</artifactId>
+    <version>1</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.jws</groupId>
+            <artifactId>javax.jws-api</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>   
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>6.5.5</version>
+                <configuration>
+                    <url>jdbc:h2:tcp://localhost/./db/leader</url>
+                    <user>sa</user>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomee.maven</groupId>
+                <artifactId>tomee-maven-plugin</artifactId>
+                <version>8.0.4</version>
+                <configuration>
+                    <tomeeClassifier>plume</tomeeClassifier>
+                    <args>-Xmx512m -XX:PermSize=256m</args>
+                    <removeDefaultWebapps>true</removeDefaultWebapps>
+                    <context>ROOT</context>
+                    <tomeeHttpPort>8090</tomeeHttpPort>
+                    <tomeeShutdownPort>8009</tomeeShutdownPort>
+                    <!-- <systemVariables>
+                        <tomee.remote.support>true</tomee.remote.support>
+                        <tomee.serialization.class.whitelist>*</tomee.serialization.class.whitelist>
+                        <tomee.serialization.class.blacklist>-</tomee.serialization.class.blacklist>
+                        <org.apache.activemq.SERIALIZABLE_PACKAGES>*</org.apache.activemq.SERIALIZABLE_PACKAGES>
+                    </systemVariables> -->
+                    <inlinedTomEEXml>
+                        <tomee>
+                            <Resource id="leaderDataSource" type="DataSource">
+                                JdbcDriver = org.h2.Driver
+                                JdbcUrl = jdbc:h2:tcp://localhost/./db/leader
+                                UserName = sa
+                                Password = 
+                                jtaManaged = true
+                            </Resource>
+                        </tomee>
+                    </inlinedTomEEXml>
+                    <libs>
+                        <lib>com.h2database:h2:1.4.200</lib>
+                    </libs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
