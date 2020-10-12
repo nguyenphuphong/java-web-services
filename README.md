@@ -19,3 +19,15 @@ Ví dụ lấy 10 tiêu đề của (information) từ vị trí thứ 50.
 Tiếp theo, chúng ta sẻ chỉnh sửa hệ thống SENIOR để có thể tương tác được với các SOAP methods và hiển thị
 các thông tin tương ứng.
 
+## Bài tập 2
+
+Bài này chúng ta sẻ làm quye với việc sử dụng REST. Yêu cầu của bài toán đặt ra là xây dựng một số các
+RESTful API để phục vụ cho nhu cầu sau:
+
+- Truy vẫn các (information) theo (title).
+- Chúng ta sẻ tạo ra một bảng khác tên là (tb_application) để lưu các thông tin đăng kí cho một thông
+tin du học nào đấy. Sau đó hãy tạo ra các API tương ứng để có thể (insert, delete, update) một application
+
+Tiếp theo, chúng ta sẻ chỉnh sửa hệ thống SENIOR để có thể tương tác được với các Rest APIs vừa tạo ra.
+Cần tạo ra các page, và gọi các API để thực hiện các tính năng trên page này.
+
